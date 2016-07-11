@@ -9,6 +9,7 @@ import nltk
 import numpy as np
 import tensorflow as tf
 from six.moves import cPickle as pickle
+import logging
 
 import csv
 # for long CSV
@@ -75,7 +76,7 @@ class TextDataHandler:
 			with open(pickle_file_name, 'wb') as f:
 				pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 		except Exception as e:
-			print('Unable to save data to', pickle_file_name, ':', e)
+			logging.error('Unable to save data to', pickle_file_name, ':', e)
 
 	@staticmethod
 	def clean_str(string):
@@ -129,7 +130,7 @@ class TextDataHandler:
 		return len(self._word_to_id) + 1  # unknown
 
 	def truncate_vocab(self, new_vocab_size):
-		if new_vocab_size == -1:
+		if new_vocab_size < 0:
 			print("New Vocab Size:", self.get_vocab_size())
 			return
 		self._word_to_id = OrderedDict(sorted(self._word_to_id.items(), key=lambda item: item[1])[:new_vocab_size - 1])

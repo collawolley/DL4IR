@@ -6,7 +6,7 @@ from six.moves import cPickle as pickle
 import sys
 import os
 sys.path.insert(0, os.path.abspath('..'))
-
+import logging
 from .DataUtil import Retrieval_Data_Util, TextDataHandler, Utilities
 from .Configs import DataConfig
 
@@ -64,7 +64,7 @@ class DataLoader(object):
       label_path = os.path.join(DataConfig.all_doc_path, lbl[i])
       label_wordIds_vec = self._d_handler.word_list_to_id_list(self._d_handler.read_words(label_path))
       labels[i] = self._d_handler.get_binary_vector(label_wordIds_vec)
-    print('Full dataset tensor:', dataset.shape, labels.shape)
+      print('Full dataset tensor:', dataset.shape, labels.shape)
     # print('Mean:', np.mean(dataset))
     # print('Standard deviation:', np.std(dataset))
     return dataset, labels
@@ -105,7 +105,7 @@ class DataLoader(object):
         pickle.dump(save, f, protocol=4)
         f.close()
       except Exception as e:
-        print('Unable to save data to', pickle_file, ':', e)
+        logging.error('Unable to save data to', pickle_file, ':', e)
         raise
       statinfo = os.stat(pickle_file)
       print('Compressed pickle size:', statinfo.st_size)
