@@ -39,6 +39,11 @@ class fullyNNConfig(object):
   learning_rate = 0.5
   decay_steps = 1000
   decay_rate = 0.65
-  regularization = False
-  dropout = False
-  learning_rate_decay = False
+  regularization = True
+  dropout = True
+  learning_rate_decay = True
+  sampler = None # uniform, log_uniform, learned_unigram, fixed_unigram
+  candidate_sampling = None # nce_loss, softmax_loss
+  num_sampled = 64  # Number of negative examples to sample.
+  train_optimizer = None # GradientDescent, Adadelta, Adagrad, Momentum, Adam, Ftrl, RMSProp, 
+
